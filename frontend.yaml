@@ -16,7 +16,7 @@ spec:
         run: frontend
     spec:
       containers:
-      - image: tbulubas/bases-node:0.0.1
+      - image: pchaganti/caravel-app:0.0.1
         imagePullPolicy: Always
         name: frontend
         terminationMessagePath: /dev/termination-log
