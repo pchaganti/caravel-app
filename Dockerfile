@@ -1,23 +1,11 @@
-FROM gcr.io/distroless/nodejs18-debian12:latest
+FROM node:20 AS build-env
+COPY . /app
+WORKDIR /app
 
-# Create app directory
-WORKDIR /usr/src/app
+RUN npm ci --omit=dev
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-# COPY package.json package.json
-# COPY package-lock.json package-lock.json
-COPY package*.json ./
-
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
-COPY . .
-
+FROM gcr.io/distroless/nodejs20-debian12
+COPY --from=build-env /app /app
+WORKDIR /app
 EXPOSE 8080
-
-CMD [ "node", "server.js" ]
-
+CMD ["server.js"]
