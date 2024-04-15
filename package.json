@@ -1,0 +1,17 @@
+{
+    "name": "caravel-app",
+    "version": "0.0.1",
+    "description": "Node.js on Docker",
+    "author": "Prabhakar Chaganti <pchaganti@gmail.com>",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.16.1",
+        "double-ended-queue": "^2.1.0-0",
+        "redis": "^2.8.0",
+        "redis-commands": "^1.4.0",
+        "redis-parser": "^2.6.0"
+    }
+}
