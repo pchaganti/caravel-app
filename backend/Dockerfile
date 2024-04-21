@@ -22,7 +22,7 @@ WORKDIR /app
 
 RUN pip install --no-cache-dir httpx starlette uvicorn
 
-FROM gcr.io/distroless/python3-debian12-amd64
+FROM gcr.io/distroless/python3-debian12:latest-amd64
 
 COPY --from=build-env /app /app
 WORKDIR /app
