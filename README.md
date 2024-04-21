@@ -1,2 +1,1 @@
-# caravel-app
-Caravel sample app
+# sampan
