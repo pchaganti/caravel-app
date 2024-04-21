@@ -17,19 +17,15 @@
 # under the License.
 #
 
-FROM python:alpine AS build
+FROM python:3 AS build-env
+COPY . /app
+WORKDIR /app
 
 RUN pip install --no-cache-dir httpx starlette sse_starlette uvicorn
 
-FROM python:alpine AS run
+FROM gcr.io/distroless/python3-debian12
 
-RUN adduser -S pchaganti -G root
-USER pchaganti
-
-COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --chown=pchaganti:root python /home/pchaganti/python
-COPY --chown=pchaganti:root static /home/pchaganti/static
-
+COPY --from=build-env /app /app
+WORKDIR /app
 EXPOSE 8080
-WORKDIR /home/pchaganti
-ENTRYPOINT ["python", "python/main.py"]
+CMD ["python/main.py"]
