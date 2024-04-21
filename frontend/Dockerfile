@@ -17,15 +17,19 @@
 # under the License.
 #
 
-FROM python:3 AS build-env
-COPY . /app
-WORKDIR /app
+FROM python:alpine AS build
 
 RUN pip install --no-cache-dir httpx starlette sse_starlette uvicorn
 
-FROM gcr.io/distroless/python3-debian12
+FROM python:alpine AS run
 
-COPY --from=build-env /app /app
-WORKDIR /app
+RUN adduser -S sampan -G root
+USER sampan
+
+COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --chown=sampan:root python /home/sampan/python
+COPY --chown=sampan:root static /home/sampan/static
+
 EXPOSE 8080
-CMD ["python/main.py"]
+WORKDIR /home/sampan
+ENTRYPOINT ["python", "python/main.py"]
