@@ -16,7 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-FROM python:3 AS build-env
+FROM --platform=linux/amd64 python:3 AS build-env
 COPY . /app
 WORKDIR /app
 

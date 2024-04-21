@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sampan-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sampan-backend
+  template:
+    metadata:
+      labels:
+        app: sampan-backend
+    spec:
+      containers:
+      - name: sampan-backend
+        image: ghcr.io/pchaganti/sampan-backend:main
