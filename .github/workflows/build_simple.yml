@@ -1,5 +1,5 @@
 #
-name: Create and publish images
+name: Create and publish simple app images
 
 on:
   push:
@@ -10,8 +10,8 @@ on:
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
-  FRONTEND_IMAGE_NAME: ${{ github.repository }}-frontend
-  BACKEND_IMAGE_NAME: ${{ github.repository }}-backend
+  FRONTEND_IMAGE_NAME: ${{ github.repository }}-simple-frontend
+  BACKEND_IMAGE_NAME: ${{ github.repository }}-simple-backend
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
@@ -44,7 +44,7 @@ jobs:
       - name: Build and push Docker image for frontend
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: frontend
+          context: simple/frontend
           push: true
           tags: ${{ steps.meta_frontend.outputs.tags }}
           labels: ${{ steps.meta_frontend.outputs.labels }}
@@ -59,7 +59,7 @@ jobs:
       - name: Build and push Docker image for backend
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: frontend
+          context: simple/backend
           push: true
           tags: ${{ steps.meta_backend.outputs.tags }}
           labels: ${{ steps.meta_backend.outputs.labels }}
